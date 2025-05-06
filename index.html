@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Video mit Ton im Vollbild</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    video {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      display: none;
+    }
+
+    #startButton {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 1em 2em;
+      font-size: 1.5em;
+      background-color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button id="startButton">Video starten</button>
+  <video id="fullscreenVideo" src="video.mp4" type="video/mp4" controls></video>
+
+  <script>
+    const video = document.getElementById('fullscreenVideo');
+    const button = document.getElementById('startButton');
+
+    button.addEventListener('click', async () => {
+      button.style.display = 'none';
+      video.style.display = 'block';
+
+      try {
+        await video.play(); // Mit Ton
+        if (video.requestFullscreen) {
+          await video.requestFullscreen();
+        } else if (video.webkitRequestFullscreen) {
+          await video.webkitRequestFullscreen();
+        } else if (video.msRequestFullscreen) {
+          await video.msRequestFullscreen();
+        }
+      } catch (error) {
+        alert("Automatisches Abspielen mit Ton wurde vom Browser blockiert.");
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
