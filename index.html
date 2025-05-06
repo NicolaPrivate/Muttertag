@@ -2,28 +2,19 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Video mit Ton im Vollbild</title>
+  <title>Audio abspielen</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      background: black;
       height: 100%;
-      overflow: hidden;
-    }
-
-    video {
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      display: none;
+      background: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     #startButton {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       padding: 1em 2em;
       font-size: 1.5em;
       background-color: white;
@@ -33,31 +24,24 @@
   </style>
 </head>
 <body>
-  <button id="startButton">Video starten</button>
-  <video id="fullscreenVideo" src="video.mp4" type="video/mp4" controls></video>
+
+  <button id="startButton">Audio starten</button>
+  <audio id="audioPlayer" src="audio.mp3"></audio>
 
   <script>
-    const video = document.getElementById('fullscreenVideo');
     const button = document.getElementById('startButton');
+    const audio = document.getElementById('audioPlayer');
 
     button.addEventListener('click', async () => {
-      button.style.display = 'none';
-      video.style.display = 'block';
-
       try {
-        await video.play(); // Mit Ton
-        if (video.requestFullscreen) {
-          await video.requestFullscreen();
-        } else if (video.webkitRequestFullscreen) {
-          await video.webkitRequestFullscreen();
-        } else if (video.msRequestFullscreen) {
-          await video.msRequestFullscreen();
-        }
+        await audio.play();  // Startet die Audiodatei
+        button.style.display = 'none';  // Versteckt den Button
       } catch (error) {
-        alert("Automatisches Abspielen mit Ton wurde vom Browser blockiert.");
+        alert("Autoplay mit Ton wurde vom Browser blockiert.");
         console.error(error);
       }
     });
   </script>
+
 </body>
 </html>
